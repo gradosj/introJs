@@ -28,7 +28,6 @@ Nos dan un número entre el 1 y 100, y tenemos que devolver por orden lo siguien
 * 53 -> BarFoo
 * 75 -> FooBarQuixBar(divisible por 3, divisible por 5, contiene un 7, contiene un 5)*/
 
-
 let myOutput = '';
 let myNumber = '75'; /* ----> INTRODUCE AQUI TU NUMERO <----- */
 let divisible = false;
@@ -37,62 +36,29 @@ const lit3 = 'Foo';
 const lit5 = 'Bar';
 const lit7 = 'Quix';
 
+/* Utilizamos esta funcion para realizar el resto de las tres divisiones
+y activar un switch en caso de que sea divisibile, que permitirá acceder a 
+la segunda funcion */
 var div = (myNumber) => {
   if (myNumber % 3 == 0) {
-
     myOutput += lit3;
     divisible = true;
   }
 
   if (myNumber % 5 == 0) {
-
     myOutput += lit5;
     divisible = true;
-
   }
 
   if (myNumber % 7 == 0) {
-
     myOutput += lit7;
     divisible = true;
-}
-}
-div(myNumber);
-
-if (divisible == false) {
-  myOutput = myNumber;
-}
-else {
-  restText();
-}
-
-
-console.log(myOutput)
-
-/*
-function div(number) {
-  if (myNumber % 3 == 0) {
-
-    myOutput += lit3;
-    divisible = true;
   }
+};
 
-  if (myNumber % 5 == 0) {
-
-    myOutput += lit5;
-    divisible = true;
-
-  }
-
-  if (myNumber % 7 == 0) {
-
-    myOutput += lit7;
-    divisible = true;
-}
-}
-*/
-
-function restText() {
+/*En esta segunda funcion recorremos la cadena buscando los numeros, 3,
+5, y 7 para añadir el segundo comentario si procediese */
+var restText = () => {
   for (let n = 0; n < myNumber.length; n++) {
     switch (myNumber.charAt(n)) {
       case '3':
@@ -104,7 +70,23 @@ function restText() {
       case '7':
         myOutput += lit7;
         break;
-
     }
   }
+};
+
+/*Validamos el numero de entrada */
+if (myNumber < 0 || myNumber > 100) {
+  console.log('Error: introduzca numero de 1 a 100')
+}
+else {
+
+  div(myNumber);
+
+  if (divisible == false) {
+    myOutput = myNumber;
+  } else {
+    restText();
+  }
+
+  console.log(myOutput);
 }
