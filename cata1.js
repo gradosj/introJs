@@ -39,7 +39,7 @@ const lit7 = 'Quix';
 /* Utilizamos esta funcion para realizar el resto de las tres divisiones
 y activar un switch en caso de que sea divisibile, que permitirá acceder a 
 la segunda funcion */
-var div = (myNumber) => {
+const div = (myNumber) => {
   if (myNumber % 3 == 0) {
     myOutput += lit3;
     divisible = true;
@@ -58,7 +58,7 @@ var div = (myNumber) => {
 
 /*En esta segunda funcion recorremos la cadena buscando los numeros, 3,
 5, y 7 para añadir el segundo comentario si procediese */
-var restText = () => {
+const restText = () => {
   for (let n = 0; n < myNumber.length; n++) {
     switch (myNumber.charAt(n)) {
       case '3':
