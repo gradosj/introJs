@@ -1,6 +1,6 @@
 let nRomanos = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
 let nValor = [1, 5, 10, 50, 100, 500, 1000];
-let miNumR = 'VIII', miNumA;
+let miNumR = 'CMXCIX', miNumA;
 let myValues = [];
 let contI = 0, contX = 0, contC = 0, contM = 0, contV = 0,
 	contL = 0, contD = 0;
@@ -107,77 +107,156 @@ const operar = (myValues) => {
 
 }
 
-
 const arabToRoman = (miNumA) => {
-	let numRomAux = [];
+	let numRomAux = [''];
 	let numConverted = false;
 	let restMiNuma = miNumA;
 	let x = 0;
+	let activateContador = false;
 
-	while (restMiNuma != 0) {
-		if (restMiNuma >= 1000) {
+	while (restMiNuma >= 1000) {
+		if (numRomAux[x] === undefined) {
 			numRomAux[x] = 'M';
-			restMiNuma = restMiNuma - 1000;
-			x++;
-		} else if (restMiNuma >= 500 && restMiNuma < 1000) {
-			numRomAux[x] = 'D';
-			restMiNuma = restMiNuma - 500;
-			x++;
-		} else if ((restMiNuma >= 100) && (restMiNuma < 500)) {
-			numRomAux[x] = 'C';
-			restMiNuma = restMiNuma - 100;
-			contC++;
-			if (contC == 3 && restMiNuma > 100) {
-				numRomAux[x - 1] = 'D';
-				restMiNuma = restMiNuma - 100;
-			} else {
-				x++;
-			}
-
-		} else if ((restMiNuma >= 50 && restMiNuma < 100)) {
-			numRomAux[x] = 'L';
-			restMiNuma = restMiNuma - 50;
-			x++;
-
-		} else if (restMiNuma >= 10 && restMiNuma < 50) {
-			numRomAux[x] = 'X';
-			restMiNuma = restMiNuma - 10;
-			contX++;
-			if (contC == 3 && restMiNuma > 10) {
-				numRomAux[x - 1] = 'L';
-				restMiNuma = restMiNuma - 10;
-			} else {
-				x++;
-			}
-
-
-		} else if (restMiNuma >= 5 && restMiNuma < 10) {
-			numRomAux[x] = 'V';
-			restMiNuma = restMiNuma - 5;
-			x++;
-
-		} else if (restMiNuma >= 1 && restMiNuma < 5) {
-			numRomAux[x] = 'I';
-			restMiNuma = restMiNuma - 1;
-			if (contI == 3 && restMiNuma > 1) {
-				numRomAux[x - 1] = 'V';
-				restMiNuma = restMiNuma - 1;
-			} else {
-				x++;
-			}
+			activateContador = true;
 
 		}
+		else {
+			numRomAux[x] = numRomAux[x] + 'M';
+		}
+
+		restMiNuma = restMiNuma - 1000;
+	}
+
+	if (activateContador == true) {
+		x++;
+		activateContador = false;
+	}
+
+	while (restMiNuma >= 500) {
+		if (numRomAux[x] === undefined) {
+			numRomAux[x] = 'D';
+			activateContador = true;
+
+		}
+		else {
+			numRomAux[x] = numRomAux[x] + 'D';
+			activateContador = true;
+		}
+
+		restMiNuma = restMiNuma - 500;
+
+	}
+
+	if (activateContador == true) {
+		x++;
+		activateContador = false;
+	}
+
+	while ((restMiNuma >= 100)) {
+		if (numRomAux[x] === undefined) {
+			numRomAux[x] = 'C';
+			activateContador = true;
+
+		}
+		else {
+			numRomAux[x] = numRomAux[x] + 'C';
+			activateContador = true;
+		}
+
+		restMiNuma = restMiNuma - 100;
+
+	}
+	if (activateContador == true) {
+		x++;
+		activateContador = false;
+	}
+
+	while ((restMiNuma >= 50)) {
+		if (numRomAux[x] === undefined) {
+			numRomAux[x] = 'L';
+			activateContador = true;
+
+		}
+		else {
+			numRomAux[x] = numRomAux[x] + 'L';
+			activateContador = true;
+		}
+
+		restMiNuma = restMiNuma - 50;
 
 
+	}
 
+	if (activateContador == true) {
+		x++;
+		activateContador = false;
+	}
+
+	while (restMiNuma >= 10) {
+		if (numRomAux[x] === undefined) {
+			numRomAux[x] = 'X';
+			activateContador = true;
+			
+		}
+		else {
+			numRomAux[x] = numRomAux[x] + 'X';
+			activateContador = true;
+		}
+
+		restMiNuma = restMiNuma - 10;
+
+
+	}
+
+	if (activateContador == true) {
+		x++;
+		activateContador = false;
+	}
+
+	while (restMiNuma >= 5) {
+		if (numRomAux[x] === undefined) {
+			numRomAux[x] = 'V';
+			activateContador = true;
+		
+		}
+		else {
+			numRomAux[x] = numRomAux[x] + 'V';
+			activateContador = true;
+		}
+
+		restMiNuma = restMiNuma - 5;
+
+
+	}
+
+	if (activateContador == true) {
+		x++;
+		activateContador = false;
+	}
+
+	while (restMiNuma >= 1 && restMiNuma < 5) {
+		if (numRomAux[x] === undefined) {
+			numRomAux[x] = 'I';
+			activateContador = true;
+		}
+		else {
+			numRomAux[x] = numRomAux[x] + 'I';
+			activateContador = true;
+		}
+
+		restMiNuma = restMiNuma - 1;
+
+	}
+	if (activateContador == true) {
+		x++;
+		activateContador = false;
 	}
 	console.log(myValues);
 	return myValues;
 
-
 }
 
-arabToRoman2(9);
+arabToRoman(999);
 
 infoError = valida_periodicidad(miNumR);
 console.log(infoError);
