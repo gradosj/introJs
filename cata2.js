@@ -1,31 +1,30 @@
 let nRomanos = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
 let nValor = [1, 5, 10, 50, 100, 500, 1000];
-let miNumR, miNumA;
-let myValues = [];
+let myNumR, myNumA;
 let contI = 0, contX = 0, contC = 0, contM = 0, contV = 0,
     contL = 0, contD = 0;
-let infoError = [false, ' '];
-let romanConvert, arabConvert;
+let infoReturn = [false, ' '];
+let myNumRom;
 
 
+/* Funcion de validacion de reglas para los numeros romanos */
+const validateRomansNumbers = (myNumRom) => {
 
-const validateRomansNumbers = (miNumR) => {
-
-    for (let n = 0; n < miNumR.length; n++) {
-        switch (miNumR[n]) {
+    for (let n = 0; n < myNumRom.length; n++) {
+        switch (myNumRom[n]) {
             case 'I':
-                if (miNumR[n + 1] != 'V' &&
-                    miNumR[n + 1] != 'X' &&
-                    miNumR[n + 1] != undefined) {
+                if (myNumRom[n + 1] != 'V' &&
+                    myNumRom[n + 1] != 'X' &&
+                    myNumRom[n + 1] != undefined) {
                     return [true, 'Incorrecto: X solo resta a V y X'];
 
                 }
                 contI++;
                 break;
             case 'X':
-                if (miNumR[n + 1] != 'L' &&
-                    miNumR[n + 1] != 'C' &&
-                    miNumR[n + 1] != undefined) {
+                if (myNumRom[n + 1] != 'L' &&
+                    myNumRom[n + 1] != 'C' &&
+                    myNumRom[n + 1] != undefined) {
                     return [true, 'Incorrecto: X solo resta a L y C'];
 
                 }
@@ -33,9 +32,9 @@ const validateRomansNumbers = (miNumR) => {
                 contX++;
                 break;
             case 'C':
-                if (miNumR[n + 1] != 'D' &&
-                    miNumR[n + 1] != 'M' &&
-                    miNumR[n + 1] != undefined) {
+                if (myNumRom[n + 1] != 'D' &&
+                    myNumRom[n + 1] != 'M' &&
+                    myNumRom[n + 1] != undefined) {
                     return [true, 'Incorrecto: C solo resta a D y M'];
 
                 }
@@ -45,11 +44,11 @@ const validateRomansNumbers = (miNumR) => {
                 contM++;
                 break;
             case 'V':
-                if (miNumR[n + 1] == 'X' ||
-                    miNumR[n + 1] == 'L' ||
-                    miNumR[n + 1] == 'C' ||
-                    miNumR[n + 1] == 'D' ||
-                    miNumR[n + 1] == 'M') {
+                if (myNumRom[n + 1] == 'X' ||
+                    myNumRom[n + 1] == 'L' ||
+                    myNumRom[n + 1] == 'C' ||
+                    myNumRom[n + 1] == 'D' ||
+                    myNumRom[n + 1] == 'M') {
                     return [true, 'Incorrecto: Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.'];
                 }
 
@@ -57,15 +56,15 @@ const validateRomansNumbers = (miNumR) => {
                 break;
             case 'L':
                 contL++;
-                if (miNumR[n + 1] == 'C' ||
-                    miNumR[n + 1] == 'D' ||
-                    miNumR[n + 1] == 'M') {
+                if (myNumRom[n + 1] == 'C' ||
+                    myNumRom[n + 1] == 'D' ||
+                    myNumRom[n + 1] == 'M') {
                     return [true, 'Incorrecto: Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.'];
                 }
                 break;
             case 'D':
                 contD++;
-                if (miNumR[n + 1] == 'M') {
+                if (myNumRom[n + 1] == 'M') {
                     return [true, 'Incorrecto: Los símbolos V, L y D no pueden colocarse a la izquierda de otro mayor.'];
                 }
                 break;
@@ -84,19 +83,22 @@ const validateRomansNumbers = (miNumR) => {
 
     }
 
-    return [false, ' '];
+    return [false, ' ', myNumRom];
 
 
 }
 
-const convertValues = (miNumR) => {
+
+/* En esta funcion recorremos las matrices de numeros y le
+asignamos su valor correspondiente, se han utilizado dos arrays */
+const convertValues = (myNumR) => {
     let x = 0;
     let valueFounded = false;
     let myValuesAux = [];
 
-    for (let n = 0; n < miNumR.length; n++) {
+    for (let n = 0; n < myNumR.length; n++) {
         while (valueFounded == false) {
-            if (miNumR[n] == nRomanos[x]) {
+            if (myNumR[n] == nRomanos[x]) {
                 myValuesAux[n] = nValor[x];
                 valueFounded = true;
                 x++;
@@ -109,12 +111,18 @@ const convertValues = (miNumR) => {
 
     }
 
-    return myValuesAux;
+
+    operations(myValuesAux);
+    return (myValuesAux.reduce((a, b) => a + b, 0));
 
 
 }
 
-const operar = (myValues) => {
+/* Segun la logica aplicada, con esta función convertimos en negativos 
+los valores numericos arabes que restan en la nomenclatura romana. 
+Realizando una suma de todos los elementos del array, nos devuelve el
+numero arabe equivalente */
+const operations = (myValues) => {
     for (let n = 0; n < myValues.length; n++) {
         if (myValues[n] < myValues[n + 1]) {
             myValues[n] = myValues[n] * -1;
@@ -126,60 +134,62 @@ const operar = (myValues) => {
 
 }
 
-const arabToRoman = (miNumA) => {
-    let unidades = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
-    let decena = ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"];
-    let centena = ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"];
-    let milesima = ["", "M", "MM", "MMM"];
-    let miNumAr, miNumRo;
-    let mil = 0, cen = 0, dec = 0, uni = 0;
+/*Funcion que convierte numeros arabes en romanos. Se establecen los 
+valores romanos de unidades a miles. Mediante division descartando decimales
+localizamos en el array la posicion correcta de cada equivalencia, y las vamos
+agregamos de forma ordenada a nuestra varible de salida. */ 
+const arabToRoman = (myNumA) => {
+    let unidades = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
+    let decena = ['', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC'];
+    let centena = ['', 'C', 'CC', 'CCC', 'CD', 'D', 'DC', 'DCC', 'DCCC', 'CM'];
+    let mylesima = ['', 'M', 'MM', 'MMM'];
+    let myNumRo;
+    let myl = 0, cen = 0, dec = 0, uni = 0;
 
-    miNumAux = miNumA;
-    if (miNumAux >= 1000) {
-        mil = Math.trunc(miNumAux / 1000);
-        miNumAux = miNumAux - (mil * 1000);
+    myNumAux = myNumA;
+    if (myNumAux >= 1000) {
+        myl = Math.trunc(myNumAux / 1000);
+        myNumAux = myNumAux - (myl * 1000);
     }
-    if (miNumAux >= 100) {
-        cen = Math.trunc(miNumAux / 100);
-        miNumAux = miNumAux - (cen * 100);
-    }
-
-    if (miNumAux >= 10) {
-        dec = Math.trunc(miNumAux / 10);
-        miNumAux = miNumAux - (dec * 10);
-    }
-
-    if (miNumAux >= 1) {
-        uni = miNumAux;
+    if (myNumAux >= 100) {
+        cen = Math.trunc(myNumAux / 100);
+        myNumAux = myNumAux - (cen * 100);
     }
 
-    miNumRo = milesima[mil] + centena[cen] + decena[dec] + unidades[uni];
-    return miNumRo;
-    /*console.log(miNumRo);*/
+    if (myNumAux >= 10) {
+        dec = Math.trunc(myNumAux / 10);
+        myNumAux = myNumAux - (dec * 10);
+    }
+
+    if (myNumAux >= 1) {
+        uni = myNumAux;
+    }
+
+    myNumRo = mylesima[myl] + centena[cen] + decena[dec] + unidades[uni];
+    return myNumRo;
+
 
 }
+
 
 
 /*LLAMADA A FUNCION DE VALIDACION DE NUMEROS ROMANOS */
-infoError = validateRomansNumbers('MX');
-if (infoError[0] == false) {
-    console.log('Número romano correcto');
+infoReturn = validateRomansNumbers('XM');
+if (infoReturn[0] == false) {
+    console.log('El número es correcto: ' + [infoReturn[2]]);
 }
 else {
-    console.log(infoError[1]);
+    console.log(infoReturn[1]);
 }
+
 /*CONVERSION DE NUMEROS ROMANOS A ARABES */
 
-myValues = convertValues('MX');
-/*	console.log(myValues);*/
-operar(myValues);
-miNumA = myValues.reduce((a, b) => a + b, 0);
-console.log('Número convertido: ' + miNumA);
+myNumA = convertValues('MX');
+console.log('Numero convertido (R --> A): ' + myNumA);
 
 
 /*CONVERSIO DE ARABES A ROMANOS */
-miNumR = arabToRoman(999);
-console.log(miNumR);
-/*
-console.log("La conversion de " + miNumA + ' es: ' + miNumR)*/
+myNumR = arabToRoman(999);
+console.log('Número convertido (A --> R): ' + myNumR);
+
 
