@@ -6,7 +6,6 @@ let contI = 0, contX = 0, contC = 0, contM = 0, contV = 0,
 let infoReturn = [false, ' '];
 let myNumRom;
 
-
 /* Funcion de validacion de reglas para los numeros romanos */
 const validateRomansNumbers = (myNumRom) => {
 
@@ -85,9 +84,7 @@ const validateRomansNumbers = (myNumRom) => {
 
     return [false, ' ', myNumRom];
 
-
 }
-
 
 /* En esta funcion recorremos las matrices de numeros y le
 asignamos su valor correspondiente, se han utilizado dos arrays */
@@ -170,8 +167,6 @@ const arabToRoman = (myNumA) => {
 
 
 }
-
-
 
 /*LLAMADA A FUNCION DE VALIDACION DE NUMEROS ROMANOS */
 infoReturn = validateRomansNumbers('XM');

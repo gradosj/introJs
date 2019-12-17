@@ -29,50 +29,79 @@ Nos dan un número entre el 1 y 100, y tenemos que devolver por orden lo siguien
 * 75 -> FooBarQuixBar(divisible por 3, divisible por 5, contiene un 7, contiene un 5)*/
 
 let myOutput = '';
-let myNumber = '75'; /* ----> INTRODUCE AQUI TU NUMERO <----- */
+let myNumber = '33'; /* ----> INTRODUCE AQUI TU NUMERO <----- */
 let divisible = false;
+let size;
+
 
 const lit3 = 'Foo';
 const lit5 = 'Bar';
 const lit7 = 'Quix';
 
-/* Utilizamos esta funcion para realizar el resto de las tres divisiones
-y activar un switch en caso de que sea divisibile, que permitirá acceder a 
-la segunda funcion */
+/* La funcion consta de varias partes : 
+  a) Bucle que ejecuta x veces la funcion hasta llegar al numero introducido 
+  b) Divisiones de resto entre 3, 5 y 7, si se cumplen añadimos a salida los 
+    literales correspondientes, sino mueve nuestro numero a salida
+  c) Bucle que recorre la longitud de nuestro numero de entrada, si encuentra
+     los numeros 3, 5, y 7 añade literal correspondiente a la salida. Controlamos tambien
+     con otro condicional, que en la salida no esté nuestro numero de entrada, en este caso
+     en vez de añadir el literal, lo asignamos */
 const div = (myNumber) => {
-  if (myNumber % 3 == 0) {
-    myOutput += lit3;
-    divisible = true;
-  }
+  /* Apartado A */
+  for (let contador = 1; contador <= myNumber; contador++) {
+    /* Apartado B */
+    if (contador % 3 == 0) {
+      myOutput += lit3;
+      divisible = true;
 
-  if (myNumber % 5 == 0) {
-    myOutput += lit5;
-    divisible = true;
-  }
-
-  if (myNumber % 7 == 0) {
-    myOutput += lit7;
-    divisible = true;
-  }
-};
-
-/*En esta segunda funcion recorremos la cadena buscando los numeros, 3,
-5, y 7 para añadir el segundo comentario si procediese */
-const restText = () => {
-  for (let n = 0; n < myNumber.length; n++) {
-    switch (myNumber.charAt(n)) {
-      case '3':
-        myOutput += lit3;
-        break;
-      case '5':
-        myOutput += lit5;
-        break;
-      case '7':
-        myOutput += lit7;
-        break;
     }
+    if (contador % 5 == 0) {
+      myOutput += lit5;
+      divisible = true;
+    }
+    if (contador % 7 == 0) {
+      myOutput += lit7;
+      divisible = true;
+    }
+    if (divisible == false) {
+      myOutput = contador;
+    }
+
+    contador = contador.toString();
+    /* Apartado C */
+    for (let n = 0; n < contador.length; n++) {
+      switch (contador.charAt(n)) {
+        case '3':
+          if (myOutput == contador) {
+            myOutput = lit3;
+          } else {
+            myOutput += lit3;
+          }
+
+          break;
+        case '5':
+          if (myOutput == contador) {
+            myOutput = lit5;
+          } else {
+            myOutput += lit5;
+          }
+          break;
+        case '7':
+          if (myOutput == contador) {
+            myOutput = lit7;
+          } else {
+            myOutput += lit7;
+          }
+          break;
+      }
+    }
+    console.log(myOutput)
+    myOutput = '';
+    divisible = false;
   }
-};
+
+
+}
 
 /*Validamos el numero de entrada */
 if (myNumber < 0 || myNumber > 100) {
@@ -82,11 +111,4 @@ else {
 
   div(myNumber);
 
-  if (divisible == false) {
-    myOutput = myNumber;
-  } else {
-    restText();
-  }
-
-  console.log(myOutput);
 }
