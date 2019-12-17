@@ -5,6 +5,7 @@ let contI = 0, contX = 0, contC = 0, contM = 0, contV = 0,
     contL = 0, contD = 0;
 let infoReturn = [false, ' '];
 let myNumRom;
+let inputNumRom;
 
 /* Funcion de validacion de reglas para los numeros romanos */
 const validateRomansNumbers = (myNumRom) => {
@@ -12,10 +13,11 @@ const validateRomansNumbers = (myNumRom) => {
     for (let n = 0; n < myNumRom.length; n++) {
         switch (myNumRom[n]) {
             case 'I':
-                if (myNumRom[n + 1] != 'V' &&
+                if (myNumRom[n + 1] != 'I' &&
+                    myNumRom[n + 1] != 'V' &&
                     myNumRom[n + 1] != 'X' &&
                     myNumRom[n + 1] != undefined) {
-                    return [true, 'Incorrecto: X solo resta a V y X'];
+                    return [true, 'Incorrecto: I se resta de V y X'];
 
                 }
                 contI++;
@@ -23,6 +25,9 @@ const validateRomansNumbers = (myNumRom) => {
             case 'X':
                 if (myNumRom[n + 1] != 'L' &&
                     myNumRom[n + 1] != 'C' &&
+                    myNumRom[n + 1] != 'X' &&
+                    myNumRom[n + 1] != 'I' &&
+                    myNumRom[n + 1] != 'V' &&
                     myNumRom[n + 1] != undefined) {
                     return [true, 'Incorrecto: X solo resta a L y C'];
 
@@ -33,6 +38,9 @@ const validateRomansNumbers = (myNumRom) => {
             case 'C':
                 if (myNumRom[n + 1] != 'D' &&
                     myNumRom[n + 1] != 'M' &&
+                    myNumRom[n + 1] != 'C' &&
+                    myNumRom[n + 1] != 'X' &&
+                    myNumRom[n + 1] != 'L' &&
                     myNumRom[n + 1] != undefined) {
                     return [true, 'Incorrecto: C solo resta a D y M'];
 
@@ -93,6 +101,7 @@ const convertValues = (myNumR) => {
     let valueFounded = false;
     let myValuesAux = [];
 
+
     for (let n = 0; n < myNumR.length; n++) {
         while (valueFounded == false) {
             if (myNumR[n] == nRomanos[x]) {
@@ -134,7 +143,7 @@ const operations = (myValues) => {
 /*Funcion que convierte numeros arabes en romanos. Se establecen los 
 valores romanos de unidades a miles. Mediante division descartando decimales
 localizamos en el array la posicion correcta de cada equivalencia, y las vamos
-agregamos de forma ordenada a nuestra varible de salida. */ 
+agregamos de forma ordenada a nuestra varible de salida. */
 const arabToRoman = (myNumA) => {
     let unidades = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX'];
     let decena = ['', 'X', 'XX', 'XXX', 'XL', 'L', 'LX', 'LXX', 'LXXX', 'XC'];
@@ -143,6 +152,9 @@ const arabToRoman = (myNumA) => {
     let myNumRo;
     let myl = 0, cen = 0, dec = 0, uni = 0;
 
+    if (myNumA < 0 || myNumA > 3999) {
+        return 'Error; introduce numero de 0 a 3999';
+    }
     myNumAux = myNumA;
     if (myNumAux >= 1000) {
         myl = Math.trunc(myNumAux / 1000);
@@ -169,22 +181,28 @@ const arabToRoman = (myNumA) => {
 }
 
 /*LLAMADA A FUNCION DE VALIDACION DE NUMEROS ROMANOS */
-infoReturn = validateRomansNumbers('XM');
+
+inputNumRom = 'MLXXXIII'; /* Introduce aqui tu numero romano */
+inputNumRom = inputNumRom.toUpperCase();
+infoReturn = validateRomansNumbers(inputNumRom);
 if (infoReturn[0] == false) {
     console.log('El número es correcto: ' + [infoReturn[2]]);
+
+
+    /*CONVERSION DE NUMEROS ROMANOS A ARABES */
+    myNumA = convertValues(inputNumRom);
+    console.log('Numero convertido (R --> A): ' + myNumA);
+
 }
 else {
     console.log(infoReturn[1]);
 }
 
-/*CONVERSION DE NUMEROS ROMANOS A ARABES */
 
-myNumA = convertValues('MX');
-console.log('Numero convertido (R --> A): ' + myNumA);
 
 
 /*CONVERSIO DE ARABES A ROMANOS */
-myNumR = arabToRoman(999);
+myNumR = arabToRoman(3999);
 console.log('Número convertido (A --> R): ' + myNumR);
 
 
