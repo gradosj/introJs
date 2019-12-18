@@ -1,5 +1,3 @@
-
-
 let nRomanos = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
 let nValor = [1, 5, 10, 50, 100, 500, 1000];
 let myNumR, myNumA;
@@ -33,32 +31,40 @@ const createBaraja = () => {
             y++;
             
 
-
         }
     }
 }
 
-function getRandomArbitrary(min, max) {
-    return Math.trunc(Math.random() * (max - min) + min);
-}
-
-const barajadoaleatorio = () => {
-
-    cantidad = baraja.complet.length;
-
-    for (k = 0; k < cantidad; k++) {
-        az = getRandomArbitrary(0, cantidad - 1);
-        tmp = baraja.complet[az];
-        baraja.complet[az] = baraja.complet[k];
-        baraja.complet[k] = tmp;
-        console.log(baraja.complet[k]);
+const barRamdom = (array) => {
+    let currentIndex = array.length, temporaryValue, randomIndex;
+  
+    // Mientras queden elementos a mezclar...
+    while (0 !== currentIndex) {
+  
+      // Seleccionar un elemento sin mezclar...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // E intercambiarlo con el elemento actual
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+      console.log(array[randomIndex]);
     }
-
-}
+  
+    return array;
+  }
 
 createBaraja();
 console.log('------------------------');
-barajadoaleatorio();
+
+arr = barRamdom(baraja.complet);
+console.log('------------------------');
+console.log(arr);
+
+
+
+
 
 
 
