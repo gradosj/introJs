@@ -8,7 +8,6 @@ let myNumRom;
 let inputNumRom;
 let y = 0;
 
-
 /* logaritmo especial */
 let cantidad; /*Un entero que señala la cantidad total de ítems que tiene el array. */
 let k;
@@ -16,14 +15,15 @@ let az;
 let tmp;
 let min, man;
 let player, player1, player2;
+let playerNumber = [];
 
 const baraja = {
     rama: ['02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14'], /* T, J, Q, K, A */
     simbols: ['S', 'H', 'C', 'D'],
     complet: [],
     random: []
-}
 
+}
 
 /* funcion para crear la baraja completa */
 const createBaraja = () => {
@@ -56,68 +56,102 @@ const barRamdom = (array) => {
     return array;
 }
 
-const valpair = (player) => {
-    let swpair = false;
-    let swPairDouble = false;
-    let ctpair = 0;
-    let vlpair = '';
-    let rtPair = new Array(5);
-    console.log(player);
-
+/* Si hay poker (cuatro cartas iguales, dos seran correlativas) */
+let validatePoker = (player) => {
     for (let x = 0; x < player.length; x++) {
-        for (let z = 0; z < player.length; z++) {
-            if (player[x].substring(0, 2) == player[z].substring(0, 2)) {
-                if (player[x] != player[z]) {
-                    if (swpair == true) {
-                        console.log(vlpair, player[z] )
-                        if (vlpair.substring(0,2) != player[z].substring(0,2)) {
-                            ctpair++;
-                            rtPair.push (player[z]);
-                            swPairDouble = true;
-                        }
-                    }
-                    else {
-                        swpair = true;
-                        vlpair = player[z];
-                        rtPair.push (player[x]);
-                        ctpair++;
-                    }
-                }
-            }
+        if (player[x] == player[x + 1]) {
+            retPoker = player[x];
         }
     }
-
-    if (swPairDouble == true) {
-        rtPair[0] = 'double';
-
-    } else if (swpair == true) {
-        rtPair[0] = 'single';
-    } else {
-        return rtPair;
-    }
-
-    console.log(rtPair); 
-    console.log(vlpair); 
-    rtPair = rtPair.push(vlpair);
-
-    console.log(rtPair);
-    return rtPair;
-
+    return retPoker;
 
 }
 
 
 let playsAnalyze = (player) => {
+    let swpair = false;
+    let swPairDouble = false;
 
-    pair = valpair(player);
+    valorPoker = [];
+    valorTrio = [];
+    valorPareja = [];
+    console.log(player);
 
+    for (let x = 0; x < 2; x++) {
+        if (player[x].substring(0, 2) == player[x + 1].substring(0, 2)
+            && player[x].substring(0, 2) == player[x + 2].substring(0, 2)
+            && player[x].substring(0, 2) == player[x + 3].substring(0, 2)) {
+            valorPoker.push(player[x]);
+            valorPoker.push(player[x + 1]);
+            valorPoker.push(player[x + 2]);
+            valorPoker.push(player[x + 3])
+            swPoker = true;
+        }
+    }
+    for (x = 0; x < 3; x++) {
+        if (player[x].substring(0, 2) == player[x + 1].substring(0, 2)
+            && player[x].substring(0, 2) == player[x + 2].substring(0, 2)) {
+            valorTrio.push(player[x]);
+            valorTrio.push(player[x + 1]);
+            valorTrio.push(player[x + 2]);
+            swTrio = true;
+        }
+    }
 
+    for (x = 0; x < 4; x++) {
+        switch (x) {
+            case 0:
+                if (player[x].substring(0, 2) == player[x + 1].substring(0, 2)
+                    && player[x].substring(0, 2) != player[x + 2].substring(0, 2)) {
+                    valorPareja.push(player[x]);
+                    valorPareja.push(player[x + 1]);
+                    //         valorPareja.push(player[x + 2]);
+                    swPareja = true;
+                }
+                break;
+            case 1:
+            case 2:
+            case 3:
+                if (player[x].substring(0, 2) == player[x + 1].substring(0, 2)
+                    && player[x].substring(0, 2) != player[x - 1].substring(0, 2)) {
+                    valorPareja.push(player[x]);
+                    valorPareja.push(player[x + 1]);
+                    //         valorPareja.push(player[x + 2]);
+                    swPareja = true;
+                }
+                break;
+        }
+    }
 
+    if (valorPareja.lenght == 4) {
+        swDoublePareja = true;
+    }
 
+    playerNumber[0] = parseInt(player[0]);
+    playerNumber[1] = parseInt(player[1]);
+    playerNumber[2] = parseInt(player[2]);
+    playerNumber[3] = parseInt(player[3]);
+    playerNumber[4] = parseInt(player[4]);
 
+    if (playerNumber[0] == (playerNumber[0] + 1)
+        && playerNumber[1] == (playerNumber[1] + 2)
+        && playerNumber[2] == (playerNumber[2] + 3)
+        && playerNumber[3] == (playerNumber[3] + 4)
+        && playerNumber[4] == (playerNumber[4] + 5)) {
+        swEscalera = true;
 
+    }
+
+    if (player[0].substring(2, 3) == player[1].substring(2, 3)
+        && player[1].substring(2, 3) == player[2].substring(2, 3)
+        && player[2].substring(2, 3) == player[3].substring(2, 3)
+        && player[3].substring(2, 3) == player[4].substring(2, 3)) {
+        swColor = true;
+
+    }
+
+    console.log(Math.max.apply(null, playerNumber));
 }
-
 
 createBaraja();
 console.log('------------------------');
@@ -126,14 +160,17 @@ arr = barRamdom(baraja.complet);
 console.log('------------------------');
 console.log(arr);
 
-
 player1 = arr.slice(0, 5);
 player2 = arr.slice(5, 10);
+
+player1.sort();
+player2.sort();
 
 console.log(player1);
 console.log(player2);
 
-playsAnalyze(['01D', '05B', '04A', '01A', '07C']);
+resultPlayer1 = playsAnalyze(['02D', '03A', '04C', '05D', '06J']);
+resultPlayer2 = playsAnalyze(['02D', '03A', '04C', '05D', '06J']);
 
 
 
