@@ -1,4 +1,27 @@
-/* logaritmo especial */
+/* Ejercicio incompleto, 
+con las pruebas que he ido haciendo veo que se crea la baraja, se baraja, se reparte y se evaluan las jugadas de una forma correcta.
+Falta el evaluar quien gana, intenté hacerlo con creando objetos dinamicos pero he tenido problemas para acceder despues a ellos.
+
+
+La idea inicial, y que seguiré intentando, era crear objetos en la funcion playsAnalize, una vez que tuvisiesmos un objeto
+por cada jugada posible y jugador ir evaluando con case todas las posibilidades ej:
+    switch de jgPoker de jugador1 y jugador2
+        true true
+            acciones
+        true false
+            acciones
+        false false
+            acciones
+        [...]
+    switch de jgTrio de jugador 1 y jugador2
+        true true
+            acciones
+        true false
+            acciones
+        [...]
+*/
+
+
 let cantidad; /*Un entero que señala la cantidad total de ítems que tiene el array. */
 let k, y = 0;
 let az;
@@ -9,9 +32,7 @@ let playerNumber = [];
 let resultPlayer2 = [];
 let resultPlayer1 = [];
 let numPlayer;
-/*
-let jgPoker1, jgPoker2, jgPareja1, jgPareja2, jgDoublePareja1, jgDoublePareja2, jgTrio1, jgTrio2, jgColor1
-        jgColor2, jgEscalera1, jgEscalera2;*/
+
 
 const baraja = {
     rama: ['02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14'], /* T, J, Q, K, A */
@@ -41,14 +62,14 @@ const createBaraja = () => {
 const barRamdom = (array) => {
     let currentIndex = array.length, temporaryValue, randomIndex;
 
-    // Mientras queden elementos a mezclar...
+    
     while (0 !== currentIndex) {
 
-        // Seleccionar un elemento sin mezclar...
+        
         randomIndex = Math.floor(Math.random() * currentIndex);
         currentIndex -= 1;
 
-        // E intercambiarlo con el elemento actual
+       
         temporaryValue = array[currentIndex];
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
@@ -58,10 +79,11 @@ const barRamdom = (array) => {
 }
 
 const theWinnerIs = () => {
-
-
+    
 
 }
+
+
 
 let playsAnalyze = (numPlayer, player) => {
     let swDoublePareja = false, swPareja = false, swPoker = false, swTrio = false, swEscalera = false,
@@ -237,7 +259,7 @@ let playsAnalyze = (numPlayer, player) => {
             
         }*/
 
-    console.log(Math.max.apply(null, playerNumber));
+    console.log(Math.max.apply(null, playerNumber)); /*asignar a array para saber el mayor si no hay otras jugadas */
 
 
     return analizePlayer;
@@ -256,11 +278,11 @@ player2 = arr.slice(5, 10);
 player1.sort();
 player2.sort();
 
-console.log(player1);
+console.log(player1); 
 console.log(player2);
 
-resultPlayer1 = playsAnalyze(1, ['02D', '03A', '04C', '05D', '06J']);
+resultPlayer1 = playsAnalyze(1, ['02D', '03A', '04C', '05D', '06J']); //OJO!!! Sustituir por player despues de probar
 console.log(resultPlayer1);
-resultPlayer2 = playsAnalyze(2, ['02D', '03A', '04C', '05D', '06J']);
+resultPlayer2 = playsAnalyze(2, ['02D', '03A', '04C', '05D', '06J']); //OJO!!! Sustituir por player despues de probar
 
 winner = theWinnerIs();
