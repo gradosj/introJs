@@ -1,13 +1,3 @@
-let nRomanos = ['I', 'V', 'X', 'L', 'C', 'D', 'M'];
-let nValor = [1, 5, 10, 50, 100, 500, 1000];
-let myNumR, myNumA;
-let contI = 0, contX = 0, contC = 0, contM = 0, contV = 0,
-    contL = 0, contD = 0;
-let infoReturn = [false, ' '];
-let myNumRom;
-let inputNumRom;
-let y = 0;
-
 /* logaritmo especial */
 let cantidad; /*Un entero que señala la cantidad total de ítems que tiene el array. */
 let k;
@@ -22,7 +12,6 @@ const baraja = {
     simbols: ['S', 'H', 'C', 'D'],
     complet: [],
     random: []
-
 }
 
 /* funcion para crear la baraja completa */
@@ -66,7 +55,6 @@ let validatePoker = (player) => {
     return retPoker;
 
 }
-
 
 let playsAnalyze = (player) => {
     let swpair = false;
@@ -153,6 +141,7 @@ let playsAnalyze = (player) => {
     console.log(Math.max.apply(null, playerNumber));
 }
 
+
 createBaraja();
 console.log('------------------------');
 
@@ -171,19 +160,4 @@ console.log(player2);
 
 resultPlayer1 = playsAnalyze(['02D', '03A', '04C', '05D', '06J']);
 resultPlayer2 = playsAnalyze(['02D', '03A', '04C', '05D', '06J']);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
